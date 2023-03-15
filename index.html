@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Trading Calculator</h1>
+    <form id="trades-form">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticker</th>
+                    <th>Entry</th>
+                    <th>Take Profit (TP)</th>
+                    <th>Stop Loss (SL)</th>
+                    <th>Win Probability</th>
+                </tr>
+            </thead>
+            <tbody id="trades-input">
+            </tbody>
+        </table>
+        <button id="add-row">Add Row</button>
+        <button type="submit">Calculate</button>
+    </form>
+    <h2>Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Adjusted Trading Size</th>
+            </tr>
+        </thead>
+        <tbody id="results">
+        </tbody>
+    </table>
+</body>
+</html>
