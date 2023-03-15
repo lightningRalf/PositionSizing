@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         inputFields.forEach(field => field.classList.toggle('dark-mode'));
     });
 
-    document.getElementById('trading-stack').focus();
     addRow();
+    document.getElementById('trading-stack').focus();
 
     tradesForm.addEventListener('submit', (event) => {
         event.preventDefault();
