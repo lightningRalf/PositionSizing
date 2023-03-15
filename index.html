@@ -10,7 +10,7 @@
     <div class="container">
         <header>
             <h1>Trading Calculator</h1>
-            <label class="switch">
+            <label class="switch" id="theme-toggle">
                 <input type="checkbox" id="theme-switch">
                 <span class="slider round"></span>
             </label>
@@ -18,7 +18,7 @@
         <form id="trades-form">
             <div class="input-group">
                 <label for="trading-stack">Trading Stack:</label>
-                <input type="number" id="trading-stack" name="trading_stack" tabindex="1" required>
+                <input type="number" id="trading-stack" name="trading_stack" tabindex="1" required autofocus>
             </div>
             <table id="trades-input">
                 <thead>
