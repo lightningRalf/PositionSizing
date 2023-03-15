@@ -6,21 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeSwitch.addEventListener('change', () => {
         document.body.classList.toggle('dark-mode');
-        const inputFields = document.querySelectorAll('input[type="text"], input[type="number"]');
-        inputFields.forEach(field => field.classList.toggle('dark-mode'));
     });
 
     addRow();
-    document.getElementById('trading-stack').focus();
 
     tradesForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        
-        tradesInput.classList.add('hidden');
-        resultsTable.classList.remove('hidden');
-
         const tradingStack = parseFloat(document.getElementById('trading-stack').value);
-        const trades = Array.from(tradesInput.rows)
+        const tradeData = Array.from(tradesInput.querySelectorAll('tr'))
+            .slice(1)
             .map(row => {
                 const inputs = row.querySelectorAll('input');
                 const ticker = inputs[0].value;
@@ -29,50 +23,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sl = parseFloat(inputs[3].value);
                 const winProbability = parseFloat(inputs[4].value);
 
-                const rr = Math.abs((tp - entry) / (sl - entry));
-                const kellyFraction = (winProbability * rr - (1 - winProbability)) / rr;
-                const tradeSize = tradingStack * kellyFraction;
-
-                return { ticker, tradeSize };
+                return { ticker, entry, tp, sl, winProbability };
             });
 
-        trades.forEach((trade, index) => {
-            const row = resultsTable.insertRow();
-            const tickerCell = row.insertCell();
-            const tradeSizeCell = row.insertCell();
-            tickerCell.textContent = trade.ticker;
-            tradeSizeCell.textContent = trade.tradeSize.toFixed(2);
-        });
-    });
-});
+        const results = calculate(tradeData, tradingStack);
+        displayResults(results);
 
-function addRow() {
-    const row = tradesInput.insertRow();
-    for (let i = 0; i < 5; i++) {
-        const cell = row.insertCell();
-        const input = document.createElement('input');
-        input.type = i === 0 ? 'text' : 'number';
-        input.required = true;
-        input.tabIndex = i + 1 + (5 * (tradesInput.rows.length - 1));
-        cell.appendChild(input);
+        tradesForm.classList.add('hidden');
+        resultsTable.classList.remove('hidden');
+    });
+
+    function addRow() {
+        const row = tradesInput.insertRow();
+        for (let i = 0; i < 5; i++) {
+            const cell = row.insertCell();
+            const input = document.createElement('input');
+            input.type = i < 4 ? 'number' : 'text';
+            input.required = true;
+            cell.appendChild(input);
+        }
+
+        const winProbabilityInput = row.querySelector('input:nth-child(5)');
+        winProbabilityInput.addEventListener('focus', () => {
+            addRow();
+        });
     }
 
-    const winProbabilityInput = row.querySelector('input:nth-child(5)');
-    winProbabilityInput.addEventListener('focus', () => {
-        addRow();
-    });
+    function calculate(tradeData, tradingStack) {
+        const results = tradeData.map(data => {
+            const rr = (data.tp - data.entry) / (data.entry - data.sl);
+            const kellyValue = kelly_criterion(data.winProbability, rr);
+            const tradingSize = tradingStack * kellyValue;
+            return { ticker: data.ticker, rr, kellyValue, tradingSize };
+        });
 
-    winProbabilityInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            addRow();
-        }
-    });
+        return results;
+    }
 
-    winProbabilityInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            tradesForm.submit();
+    function kelly_criterion(winProbability, rr) {
+        return (winProbability * rr - (1 - winProbability)) / rr;
+    }
+
+    function displayResults(results) {
+        resultsTable.innerHTML = `
+            <tr>
+                <th>Ticker</th>
+                <th>RR</th>
+                <th>Kelly Value</th>
+                <th>Trading Size</th>
+            </tr>
+        `;
+
+        for (const result of results) {
+            const row = resultsTable.insertRow();
+            row.insertCell().textContent = result.ticker;
+            row.insertCell().textContent = result.rr.toFixed(2);
+            row.insertCell().textContent = result.kellyValue.toFixed(2);
+            row.insertCell().textContent = result.tradingSize.toFixed(2);
         }
-    });
-}
+    }
+});
