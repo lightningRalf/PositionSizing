@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const results = document.getElementById('results');
     const addRowButton = document.getElementById('add-row');
 
-    addRowButton.addEventListener('click', (event) => {
+    addRowButton.onclick = (event) => {
         event.preventDefault();
         tradesInput.appendChild(createRow());
-    });
+    };
 
     tradesForm.addEventListener('submit', (event) => {
         event.preventDefault();
