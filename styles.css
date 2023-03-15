@@ -111,3 +111,10 @@ th, td {
 body.dark-mode th, body.dark-mode td {
     border-color: #888;
 }
+
+body.dark-mode input,
+body.dark-mode button,
+body.dark-mode th,
+body.dark-mode td {
+    color: #eee;
+}
