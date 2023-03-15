@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = document.createElement('input');
             input.type = i < 4 ? 'number' : 'text';
             input.required = true;
+            input.tabIndex = i + 1;
             cell.appendChild(input);
         }
 
