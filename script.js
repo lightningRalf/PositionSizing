@@ -53,7 +53,7 @@ function addRow() {
         const input = document.createElement('input');
         input.type = i === 0 ? 'text' : 'number';
         input.required = true;
-        input.tabIndex = i + 1;
+        input.tabIndex = i + 1 + (5 * (tradesInput.rows.length - 1));
         cell.appendChild(input);
     }
 
