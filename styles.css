@@ -1,34 +1,113 @@
-* {
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    transition: background-color 0.3s;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+body.dark-mode {
+    background-color: #333;
 }
 
-th, td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ccc;
+#theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+}
+
+#theme-switch {
+    display: none;
+}
+
+#theme-switch + label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+#theme-switch + label:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s;
+}
+
+#theme-switch:checked + label:before {
+    left: 35px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+body.dark-mode h1 {
+    color: #eee;
+}
+
+#trading-stack-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+input {
+    margin: 0.5rem;
 }
 
 button {
-    background-color: #007BFF;
-    color: white;
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    background-color: #3a86ff;
+    color: #fff;
     border: none;
-    padding: 8px 16px;
+    border-radius: 5px;
     cursor: pointer;
-    text-transform: uppercase;
+    font-weight: 500;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #4a9fff;
+}
+
+.hidden {
+    display: none;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+body.dark-mode th, body.dark-mode td {
+    border-color: #888;
 }
