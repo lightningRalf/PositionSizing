@@ -21,4 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
         tradesInput.appendChild(createRow());
     });
 
-    tradesForm.addEventListener('submit', (event) =>
+    tradesForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // Add your JavaScript code for calculations here
+
+        // Example:
+        // results.innerHTML = `
+        //     <tr>
+        //         <td>Ticker</td>
+        //         <td>Adjusted Trading Size</td>
+        //     </tr>
+        // `;
+    });
+});
