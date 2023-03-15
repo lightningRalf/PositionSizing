@@ -1,59 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    transition: background-color 0.3s;
 }
 
-.dark-mode {
+body.dark-mode {
     background-color: #333;
-    color: #f4f4f4;
 }
 
-.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
-    color: #f4f4f4;
+#theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
 }
 
-input[type="text"], input[type="number"] {
-    color: #333;
+#theme-switch {
+    display: none;
 }
 
-input[type="text"].dark-mode, input[type="number"].dark-mode {
-    color: #f4f4f4;
+#theme-switch + label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
 }
 
-.container {
-    max-width: 1170px;
-    margin: auto;
-    overflow: hidden;
+#theme-switch + label:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s;
 }
 
-.header {
-    background: #f4f4f4;
-    padding: 1rem;
-    text-align: center;
-}
-
-.light {
-    background: #f4f4f4;
-    color: #333;
-}
-
-.dark {
-    background: #333;
-    color: #f4f4f4;
+#theme-switch:checked + label:before {
+    left: 35px;
 }
 
 h1 {
-    font-size: 3rem;
-    line-height: 1.2;
+    text-align: center;
+    margin-top: 2rem;
     margin-bottom: 1rem;
+    color: #333;
+}
+
+body.dark-mode h1 {
+    color: #eee;
+}
+
+#trading-stack-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+input {
+    margin: 0.5rem;
+}
+
+button {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    background-color: #3a86ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #4a9fff;
 }
 
 .hidden {
     display: none;
 }
 
-input {
-    color: inherit;
+table {
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+body.dark-mode th, body.dark-mode td {
+    border-color: #888;
 }
