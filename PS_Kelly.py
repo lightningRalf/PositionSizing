@@ -23,8 +23,8 @@ def main():
 
     kelly_values = [kelly_criterion(win_probability, rr) for entry, tp, sl, rr, win_probability in trades]
     
-    if len(trades) == 1:
-        adjusted_trading_sizes = [kelly_values[0] * trading_stack]
+    if sum(kelly_values) < 1:
+        adjusted_trading_sizes = [kelly_value * trading_stack for kelly_value in kelly_values]
     else:
         total_kelly_value = sum(kelly_values)
         adjusted_trading_sizes = [kv * trading_stack / total_kelly_value for kv in kelly_values]
