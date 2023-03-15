@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const totalKellyValue = trades.reduce((sum, trade) => sum + trade.kellyValue, 0);
 
-        const tradingStack = parseFloat(prompt('Enter your trading stack:'));
+        const tradingStack = parseFloat(document.getElementById('trading-stack').value);
+
 
         trades.forEach((trade) => {
             trade.adjustedTradingSize = (trade.kellyValue / totalKellyValue) * tradingStack;
