@@ -6,12 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeSwitch.addEventListener('change', () => {
         document.body.classList.toggle('dark-mode');
+    
     });
 
+    document.getElementById('trading-stack').focus();
+    
     addRow();
 
     tradesForm.addEventListener('submit', (event) => {
         event.preventDefault();
+        
+        tradesForm.classList.add('hidden');
+        resultsTable.classList.remove('hidden');
+        
         const tradingStack = parseFloat(document.getElementById('trading-stack').value);
         const tradeData = Array.from(tradesInput.querySelectorAll('tr'))
             .slice(1)
@@ -38,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 5; i++) {
             const cell = row.insertCell();
             const input = document.createElement('input');
-            input.type = i < 4 ? 'number' : 'text';
+            input.type = i === 0 ? 'text' : (i < 4 ? 'number' : 'text');
+            input.step = i === 0 ? undefined : (i < 4 ? '1' : undefined);
             input.required = true;
             input.tabIndex = i + 1; 
             cell.appendChild(input);
@@ -47,6 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const winProbabilityInput = row.querySelector('input:nth-child(5)');
         winProbabilityInput.addEventListener('focus', () => {
             addRow();
+        });
+        
+        winProbabilityInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                addRow();
+            }
+        });
+      
+        winProbabilityInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                tradesForm.submit();
+            }
         });
     }
 
