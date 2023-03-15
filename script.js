@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeSwitch.addEventListener('change', () => {
         document.body.classList.toggle('dark-mode');
+        const inputFields = document.querySelectorAll('input[type="text"], input[type="number"]');
+        inputFields.forEach(field => field.classList.toggle('dark-mode'));
     });
 
     document.getElementById('trading-stack').focus();
