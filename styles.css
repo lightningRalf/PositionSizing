@@ -1,59 +1,78 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const themeSwitch = document.getElementById('theme-switch');
+    const tradesForm = document.getElementById('trades-form');
+    const tradesInput = document.getElementById('trades-input');
+    const resultsTable = document.getElementById('results');
 
-.dark-mode {
-    background-color: #333;
-    color: #f4f4f4;
-}
+    themeSwitch.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+        const inputFields = document.querySelectorAll('input[type="text"], input[type="number"]');
+        inputFields.forEach(field => field.classList.toggle('dark-mode'));
+    });
 
-.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
-    color: #f4f4f4;
-}
+    addRow();
+    document.getElementById('trading-stack').focus();
 
-input[type="text"], input[type="number"] {
-    color: #333;
-}
+    tradesForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        tradesInput.classList.add('hidden');
+        resultsTable.classList.remove('hidden');
 
-input[type="text"].dark-mode, input[type="number"].dark-mode {
-    color: #f4f4f4;
-}
+        const tradingStack = parseFloat(document.getElementById('trading-stack').value);
+        const trades = Array.from(tradesInput.rows)
+            .map(row => {
+                const inputs = row.querySelectorAll('input');
+                const ticker = inputs[0].value;
+                const entry = parseFloat(inputs[1].value);
+                const tp = parseFloat(inputs[2].value);
+                const sl = parseFloat(inputs[3].value);
+                const winProbability = parseFloat(inputs[4].value);
 
-.container {
-    max-width: 1170px;
-    margin: auto;
-    overflow: hidden;
-}
+                const rr = Math.abs((tp - entry) / (sl - entry));
+                const kellyFraction = (winProbability * rr - (1 - winProbability)) / rr;
+                const tradeSize = tradingStack * kellyFraction;
 
-.header {
-    background: #f4f4f4;
-    padding: 1rem;
-    text-align: center;
-}
+                return { ticker, tradeSize };
+            });
 
-.light {
-    background: #f4f4f4;
-    color: #333;
-}
+        trades.forEach((trade, index) => {
+            const row = resultsTable.insertRow();
+            const tickerCell = row.insertCell();
+            const tradeSizeCell = row.insertCell();
+            tickerCell.textContent = trade.ticker;
+            tradeSizeCell.textContent = trade.tradeSize.toFixed(2);
+        });
+    });
+});
 
-.dark {
-    background: #333;
-    color: #f4f4f4;
-}
+function addRow() {
+    const row = tradesInput.insertRow();
+    for (let i = 0; i < 5; i++) {
+        const cell = row.insertCell();
+        const input = document.createElement('input');
+        input.type = i === 0 ? 'text' : 'number';
+        input.required = true;
+        input.tabIndex = i + 1;
+        cell.appendChild(input);
+    }
 
-h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
+    const winProbabilityInput = row.querySelector('input:nth-child(5)');
+    winProbabilityInput.addEventListener('focus', () => {
+        addRow();
+    });
 
-.hidden {
-    display: none;
-}
+    winProbabilityInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            addRow();
+        }
+    });
 
-input {
-    color: inherit;
+    winProbabilityInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            tradesForm.submit();
+        }
+    });
 }
