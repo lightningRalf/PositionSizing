@@ -1,34 +1,59 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    max-width: 960px;
-    margin: 0 auto;
+    line-height: 1.6;
+    margin: 0;
     padding: 20px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.dark-mode {
+    background-color: #333;
+    color: #f4f4f4;
 }
 
-th, td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ccc;
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
+    color: #f4f4f4;
 }
 
-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    text-transform: uppercase;
+input[type="text"], input[type="number"] {
+    color: #333;
 }
 
-button:hover {
-    background-color: #0056b3;
+input[type="text"].dark-mode, input[type="number"].dark-mode {
+    color: #f4f4f4;
+}
+
+.container {
+    max-width: 1170px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.header {
+    background: #f4f4f4;
+    padding: 1rem;
+    text-align: center;
+}
+
+.light {
+    background: #f4f4f4;
+    color: #333;
+}
+
+.dark {
+    background: #333;
+    color: #f4f4f4;
+}
+
+h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    color: inherit;
 }
