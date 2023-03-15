@@ -118,3 +118,7 @@ body.dark-mode th,
 body.dark-mode td {
     color: #eee;
 }
+
+body.dark-mode label {
+    color: #eee;
+}
