@@ -3,33 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Size Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <title>Trading Calculator</title>
 </head>
 <body>
-    <div id="theme-toggle">
-        <input type="checkbox" id="theme-switch" title="Toggle Dark Mode">
-        <label for="theme-switch"></label>
-    </div>
-    <h1>Trading Size Calculator</h1>
-    <div id="trading-stack-container">
-        <label for="trading-stack">Trading Stack:</label>
-        <input type="number" step="0.01" id="trading-stack" required>
-    </div>
-    <form id="trades-form">
-        <table id="trades-input">
+    <div class="container">
+        <header>
+            <h1>Trading Calculator</h1>
+            <label class="switch">
+                <input type="checkbox" id="theme-switch">
+                <span class="slider round"></span>
+            </label>
+        </header>
+        <form id="trades-form">
+            <div class="input-group">
+                <label for="trading-stack">Trading Stack:</label>
+                <input type="number" id="trading-stack" step="0.01" required>
+            </div>
+            <table id="trades-input">
+                <thead>
+                <tr>
+                    <th>Ticker</th>
+                    <th>Entry</th>
+                    <th>TP</th>
+                    <th>SL</th>
+                    <th>Win Probability</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <button type="submit" id="calculate-btn">Calculate</button>
+        </form>
+        <table id="results" class="hidden">
+            <caption>Results</caption>
+            <thead>
             <tr>
                 <th>Ticker</th>
-                <th>Entry</th>
-                <th>TP</th>
-                <th>SL</th>
-                <th>Win Probability</th>
+                <th>Adjusted Trade Size</th>
             </tr>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
-        <button type="submit" tabindex="-1" class="calculate-btn">Calculate</button>
-    </form>
-    <table id="results" class="hidden">
-    </table>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
