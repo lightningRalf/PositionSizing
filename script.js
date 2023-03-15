@@ -1,4 +1,14 @@
-// ... (previous code) ...
+function createRow() {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td><input type="text" name="ticker" required></td>
+        <td><input type="number" step="0.01" name="entry" required></td>
+        <td><input type="number" step="0.01" name="tp" required></td>
+        <td><input type="number" step="0.01" name="sl" required></td>
+        <td><input type="number" step="0.01" min="0" max="1" name="winProbability" required></td>
+    `;
+    return row;
+}
 
 function calculate_rr(entry, tp, sl) {
     return Math.abs((tp - entry) / (entry - sl));
@@ -9,7 +19,15 @@ function kelly_criterion(win_probability, win_loss_ratio) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (previous code) ...
+    const tradesForm = document.getElementById('trades-form');
+    const tradesInput = document.getElementById('trades-input');
+    const results = document.getElementById('results');
+    const addRowButton = document.getElementById('add-row');
+
+    addRowButton.onclick = (event) => {
+        event.preventDefault();
+        tradesInput.appendChild(createRow());
+    };
 
     tradesForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -23,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const winProbability = parseFloat(row.querySelector('[name="winProbability"]').value);
 
             const rr = calculate_rr(entry, tp, sl);
-            const kellyValue = kelly_criterion(winProbability, rr);
+            const kellyValue = kelly_criterion(win_probability, rr);
 
             return { ticker, entry, tp, sl, winProbability, rr, kellyValue };
         });
@@ -33,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tradingStack = parseFloat(prompt('Enter your trading stack:'));
 
         trades.forEach((trade) => {
-            trade.adjustedTradingSize = trade.kellyValue * tradingStack / totalKellyValue;
+            trade.adjustedTradingSize = (trade.kellyValue / totalKellyValue) * tradingStack;
         });
 
         results.innerHTML = trades
