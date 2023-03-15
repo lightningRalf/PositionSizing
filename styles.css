@@ -122,3 +122,7 @@ body.dark-mode td {
 body.dark-mode label {
     color: #eee;
 }
+
+input {
+    color: inherit;
+}
