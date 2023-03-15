@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const winProbability = parseFloat(row.querySelector('[name="winProbability"]').value);
 
             const rr = calculate_rr(entry, tp, sl);
-            const kellyValue = kelly_criterion(win_probability, rr);
+            const kellyValue = kelly_criterion(winProbability, rr);
 
             return { ticker, entry, tp, sl, winProbability, rr, kellyValue };
         });
