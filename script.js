@@ -38,14 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 5; i++) {
             const cell = row.insertCell();
             const input = document.createElement('input');
-            input.type = i < 4 ? 'number' : 'text';
+            input.type = i === 0 ? 'text' : 'number';
             input.required = true;
+            input.step = i > 0 && i < 4 ? '0.01' : '1';
             cell.appendChild(input);
         }
 
         const winProbabilityInput = row.querySelector('input:nth-child(5)');
         winProbabilityInput.addEventListener('focus', () => {
             addRow();
+        });
+
+        row.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+                event.preventDefault();
+                tradesForm.dispatchEvent(new Event('submit'));
+            }
         });
     }
 
